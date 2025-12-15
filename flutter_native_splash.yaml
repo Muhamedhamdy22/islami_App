@@ -5,5 +5,5 @@ flutter_native_splash:
   android_12:
     color: "#202020"
     image: assets/images/splash-logo.png
-    icon_background_color: "#FFFFFF"
+    icon_background_color: "#202020"
     branding: assets/images/splash-branding.png
