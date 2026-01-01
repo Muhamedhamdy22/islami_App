@@ -1,9 +1,13 @@
 flutter_native_splash:
-  color: "#202020"
-  background_image: "assets/images/splash-screen.png"
+  color: "#1a1a1a"
+  background_image: assets/images/splash_background.png
+  image: assets/images/splash_logo.png
   fullscreen: true
+
   android_12:
-    color: "#202020"
-    image: assets/images/splash-logo.png
-    icon_background_color: "#202020"
-    branding: assets/images/splash-branding.png
+    color: "#1a1a1a"
+    background_image: assets/images/splash_background.png
+    image: assets/images/splash_logo.png
+    icon_background_color: "#1a1a1a"
+#    branding: assets/images/splash_branding.png
+    branding_mode: bottom
