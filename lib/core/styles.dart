@@ -14,4 +14,9 @@ static TextStyle bodyStyle =  TextStyle(
   color:AppColor.primary,
   fontWeight: FontWeight.bold,
 );
+static TextStyle large =  TextStyle(
+  fontSize: 16,
+  color:AppColor.white,
+  fontWeight: FontWeight.bold,
+);
 }

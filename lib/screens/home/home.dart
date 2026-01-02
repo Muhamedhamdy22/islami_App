@@ -64,9 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Opacity(
-              opacity: 0.2,
-              child: tabs[selectedIndex]),
+          tabs[selectedIndex],
           Image.asset("assets/images/Logo.png"),
         ],
       ),

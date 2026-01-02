@@ -8,7 +8,7 @@ class HadethTab extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(image: AssetImage("assets/images/hadeth.png"),
-            fit: BoxFit.cover
+            fit: BoxFit.cover,  opacity: 0.2,
         ),
       ),
     );
