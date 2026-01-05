@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app/core/app_color.dart';
 import 'package:islami_app/core/styles.dart';
+import 'package:islami_app/models/sura_model.dart';
 import 'package:islami_app/screens/home/widgets/sura_item.dart';
+import 'package:islami_app/screens/sura_details/sura_details.dart';
 
 class QueranTab extends StatelessWidget {
   QueranTab({super.key});
@@ -447,10 +449,22 @@ class QueranTab extends StatelessWidget {
                 ),
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) =>
-                    SuraItem(nameAr: suresNAmeAr[index],
-                        nameEn: suresListEn[index],
-                        versesCount: versesCount[index] ,
-                        index: index+1),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, SuraDetailsScreen.routeName,
+                        arguments: SuraModel(
+                          nameAr: suresNAmeAr[index],
+                          nameEn: suresListEn[index],
+                          index: index,
+                          versesCount: versesCount[index],
+                        )
+                        );
+                      } ,
+                      child: SuraItem(nameAr: suresNAmeAr[index],
+                          nameEn: suresListEn[index],
+                          versesCount: versesCount[index] ,
+                          index: index+1),
+                    ),
                 itemCount: suresNAmeAr.length,
               ),
             ),
