@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:islami_app/core/app_color.dart';
+import 'package:islami_app/core/cache_helper.dart';
 import 'package:islami_app/core/styles.dart';
 import 'package:islami_app/screens/home/home.dart';
 
@@ -53,7 +54,8 @@ class AppIntroductionScreen extends StatelessWidget {
       showNextButton: true,
       showBackButton: true,
       showSkipButton: true,
-      onSkip: () {
+      onSkip: () async {
+        await CacheHelper.saveBool("introScreenFlag", true);
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       },
       dotsFlex: 2,
@@ -80,7 +82,8 @@ class AppIntroductionScreen extends StatelessWidget {
       back: Text("Back" , style: AppStyles.bodyStyle,),
       skip:  Text("Skip" , style: AppStyles.bodyStyle,),
       done:  Text("Done" , style: AppStyles.bodyStyle,),
-      onDone: () {
+      onDone: () async {
+        await CacheHelper.saveBool("introScreenFlag", true);
         Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       },
     );

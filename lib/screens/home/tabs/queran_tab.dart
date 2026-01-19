@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app/core/app_color.dart';
+import 'package:islami_app/core/cache_helper.dart';
 import 'package:islami_app/core/styles.dart';
 import 'package:islami_app/models/sura_model.dart';
 import 'package:islami_app/screens/home/widgets/sura_item.dart';
 import 'package:islami_app/screens/sura_details/sura_details.dart';
 
-class QueranTab extends StatelessWidget {
+class QueranTab extends StatefulWidget {
   QueranTab({super.key});
 
+  @override
+  State<QueranTab> createState() => _QueranTabState();
+}
+
+class _QueranTabState extends State<QueranTab> {
   List<String> suresNAmeAr = [
     "الفاتحه",
     "البقرة",
@@ -124,6 +130,7 @@ class QueranTab extends StatelessWidget {
     "الفلق",
     "الناس",
   ];
+
   List<String> suresListEn = [
     "Al-Fatiha",
     "Al-Baqarah",
@@ -240,6 +247,7 @@ class QueranTab extends StatelessWidget {
     "Al-Falaq",
     "An-Nas",
   ];
+
   List<String> versesCount = [
     '7',
     '286',
@@ -357,8 +365,50 @@ class QueranTab extends StatelessWidget {
     '6',
   ];
 
+  List<SuraModel> suraListData = [];
+  List<SuraModel> filteredSuraListData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    createSures();
+    filteredSuraListData = suraListData;
+  }
+
+  createSures() {
+    for (int i = 0; i < suresListEn.length; i++) {
+      suraListData.add(
+        SuraModel(
+          nameAr: suresNAmeAr[i],
+          nameEn: suresListEn[i],
+          versesCount: versesCount[i],
+          index: i + 1,
+        ),
+      );
+    }
+  }
+
+  TextEditingController searchController = TextEditingController();
+
+
+  _FilterData(String value) {
+    filteredSuraListData = suraListData.where((element) {
+      return element.nameAr.contains(value) ||
+            element.index== int.parse(value)||
+          element.nameEn.toLowerCase().contains(value.toLowerCase());
+    },).toList();
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<String> mostRecently =
+        CacheHelper
+            .getSurasList()
+            ?.reversed
+            .toList() ?? [];
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -374,6 +424,10 @@ class QueranTab extends StatelessWidget {
           children: [
             SizedBox(height: 192),
             TextField(
+              controller: searchController,
+              onChanged: (value) {
+                _FilterData(value);
+              },
               cursorColor: AppColor.primary,
               style: AppStyles.large,
               decoration: InputDecoration(
@@ -394,78 +448,89 @@ class QueranTab extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            Text("Most Recently", style: AppStyles.large),
-            SizedBox(height: 10),
+            if (mostRecently.isNotEmpty) ...[
+              Text("Most Recently", style: AppStyles.large),
+              SizedBox(height: 10),
+            ],
             Container(
               height: 160,
               child: ListView.separated(
-                separatorBuilder: (context, index) => SizedBox(
-                  width: 10,
-                ),
-              itemCount: suresNAmeAr.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-              return Container(
-                height: 160,
-                width: 280,
-                padding: EdgeInsets.all(17),
-                decoration: BoxDecoration(
-                    color: AppColor.primary,
-                  borderRadius: BorderRadius.circular(20)
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(suresListEn[index], style: AppStyles.titleStyle.copyWith(
-                            color: AppColor.black
-                          ),),
-                          Text(suresNAmeAr[index], style: AppStyles.titleStyle.copyWith(
-                            color: AppColor.black
-                          ),),
-                          Text("${versesCount[index]} Verses", style: AppStyles.titleStyle.copyWith(
-                              color: AppColor.black, fontSize: 14
-                          ),),
-                        ],
-                      ),
+                separatorBuilder: (context, index) => SizedBox(width: 10),
+                itemCount: mostRecently.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 160,
+                    width: 280,
+                    padding: EdgeInsets.all(17),
+                    decoration: BoxDecoration(
+                      color: AppColor.primary,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    Expanded(child: Image.asset("assets/images/Rectangle 124.png")),
-                  ],
-                ),
-              );
-            },),),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                suresListEn[int.parse(mostRecently[index])],
+                                style: AppStyles.titleStyle.copyWith(
+                                  color: AppColor.black,
+                                ),
+                              ),
+                              Text(
+                                suresNAmeAr[int.parse(mostRecently[index])],
+                                style: AppStyles.titleStyle.copyWith(
+                                  color: AppColor.black,
+                                ),
+                              ),
+                              Text(
+                                "${versesCount[int.parse(
+                                    mostRecently[index])]} Verses",
+                                style: AppStyles.titleStyle.copyWith(
+                                  color: AppColor.black,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Image.asset("assets/images/Rectangle 124.png"),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
             SizedBox(height: 10),
             Text("Sures List", style: AppStyles.large),
             SizedBox(height: 10),
             Expanded(
               child: ListView.separated(
-                separatorBuilder: (context, index) => Divider(
-                  color: AppColor.white,
-                  indent: 44,
-                  endIndent: 44,
-                ),
+                separatorBuilder: (context, index) =>
+                    Divider(color: AppColor.white, indent: 44, endIndent: 44),
                 padding: EdgeInsets.zero,
                 itemBuilder: (context, index) =>
                     InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, SuraDetailsScreen.routeName,
-                        arguments: SuraModel(
-                          nameAr: suresNAmeAr[index],
-                          nameEn: suresListEn[index],
-                          index: index,
-                          versesCount: versesCount[index],
-                        )
+                      onTap: () async {
+                        await CacheHelper.saveSurasList(index);
+                        setState(() {});
+                        Navigator.pushNamed(
+                          context,
+                          SuraDetailsScreen.routeName,
+                          arguments: filteredSuraListData[index],
                         );
-                      } ,
-                      child: SuraItem(nameAr: suresNAmeAr[index],
-                          nameEn: suresListEn[index],
-                          versesCount: versesCount[index] ,
-                          index: index+1),
+                      },
+                      child: SuraItem(
+                        model: filteredSuraListData[index],
+                      )
+                      ,
                     ),
-                itemCount: suresNAmeAr.length,
+                itemCount: filteredSuraListData.length,
               ),
             ),
           ],
