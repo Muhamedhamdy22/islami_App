@@ -19,4 +19,9 @@ static TextStyle large =  TextStyle(
   color:AppColor.white,
   fontWeight: FontWeight.bold,
 );
+static TextStyle mTittle =  TextStyle(
+  fontSize: 36,
+  color:AppColor.white,
+  fontWeight: FontWeight.bold,
+);
 }
