@@ -1,16 +1,51 @@
-# islami_app
+# 🕌 Islami App
 
-A new Flutter project.
+A beautifully designed Islamic mobile application built with Flutter.  
+Islami App provides essential Islamic features with a clean and spiritual UI.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## ✨ Features
 
-A few resources to get you started if this is your first Flutter project:
+- 📖 Quran with all Surahs
+- 📿 Hadith collection
+- 🕐 Prayer times
+- 🌙 Dark & Light mode support
+- 🌍 Multi-language support (Arabic / English)
+- 📱 Responsive UI for all screen sizes
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠️ Tech Stack
+
+| Technology | Usage |
+|------------|-------|
+| Flutter | UI Framework |
+| Dart | Programming Language |
+| Cubit (Bloc) | State Management |
+
+---
+
+## 🚀 Getting Started
+
+1. Clone the repo:
+```bash
+git clone https://github.com/Muhamedhamdy22/islami_App.git
+```
+2. Install dependencies:
+```bash
+flutter pub get
+```
+3. Run the app:
+```bash
+flutter run
+```
+
+---
+
+## 👨‍💻 Developer
+
+**Mohamed Hamdy**  
+Flutter Developer  ![Record_2026-02-08-11-07-27-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/be075ebb-ac27-422e-a1b3-0d7729cd1022)
+
+[GitHub](https://github.com/Muhamedhamdy22)
